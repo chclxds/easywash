@@ -1,2 +1,1 @@
-# easywash
 easywash
