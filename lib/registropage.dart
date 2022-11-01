@@ -43,8 +43,9 @@ class _RegistroPageState extends State<RegistroPage> {
               ),
             ),
           ),
-          Container(
-            alignment: Alignment.center,
+          SizedBox(
+            width: 300,
+            height: 100,
             child: ListView(shrinkWrap: true, children: [
               RadioListTile(
                   value: 1,
