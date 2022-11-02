@@ -1,5 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
+// ignore_for_file: avoid_print
+
+import 'dart:convert';
+import 'package:easywash/easywash_page.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'registropage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -14,13 +19,6 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _senhaController = TextEditingController();
   bool _verSenha = false;
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _senhaController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -144,9 +142,36 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   logar() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: _emailController.text.trim(),
-      password: _senhaController.text.trim(),
+    SharedPreferences shrdPreferences = await SharedPreferences.getInstance();
+    var url = Uri.parse('https://demo.treblle.com/');
+    var response = await http.post(
+      url,
+      body: {
+        'user_id': _emailController.text,
+        'password': _senhaController.text,
+      },
     );
+    print(response.statusCode);
+    print(response.body);
+    if (response.statusCode == 200) {
+      String token = json.decode(response.body)['token'];
+      await shrdPreferences.setString('token', 'Token $token');
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const EasyWashPage(),
+        ),
+      );
+    } else {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.redAccent,
+          content: Text('E-mail e/ou Senha inválidos'),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    }
   }
 }

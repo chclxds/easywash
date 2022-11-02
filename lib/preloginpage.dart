@@ -1,5 +1,6 @@
 import 'package:easywash/registropage.dart';
 import 'package:flutter/material.dart';
+
 import 'loginpage.dart';
 
 class PreLoginPage extends StatefulWidget {
