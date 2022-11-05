@@ -1,5 +1,6 @@
+import 'package:easywash/servicos.dart';
 import 'package:flutter/material.dart';
-import 'registropage.dart';
+//import 'registropage.dart';
 
 class CadastrarPage extends StatefulWidget {
   const CadastrarPage({super.key});
@@ -140,7 +141,7 @@ class _CadastrarPageState extends State<CadastrarPage> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => const RegistroPage(),
+        builder: (context) => const ServicosCadastro(),
       ),
     );
   }
