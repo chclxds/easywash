@@ -1,17 +1,31 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomePage extends StatelessWidget {
+  final dynamic title;
+  const HomePage({Key? key, this.title}) : super(key: key);
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text('Home Page')),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Pagina Inicial"),
+      ),
+      body: Center(
+        child: Column(children: [
+          const Text("Login"),
+          const Text("Sucesso"),
+          ElevatedButton(
+              onPressed: () {
+                _signOut();
+              },
+              child: const Icon(Icons.switch_access_shortcut))
+        ]),
+      ),
     );
+  }
+
+  Future<void> _signOut() async {
+    await FirebaseAuth.instance.signOut();
   }
 }

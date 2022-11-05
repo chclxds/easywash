@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'cadastrapage.dart';
 import 'cadastrapageuser.dart';
+import 'loginpage.dart';
 
 class RegistroPage extends StatefulWidget {
   const RegistroPage({super.key});
@@ -16,12 +17,14 @@ class _RegistroPageState extends State<RegistroPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          centerTitle: true,
-          title: const Text(
-            'Cadastra-se como!',
-            style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-          ),
-          backgroundColor: const Color.fromARGB(255, 61, 144, 171)),
+        centerTitle: true,
+        title: const Text(
+          'EasyWash',
+          style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+        ),
+        backgroundColor: const Color.fromRGBO(61, 144, 171, 1),
+        leading: Image.asset('assets/IconTop.png'),
+      ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -34,7 +37,7 @@ class _RegistroPageState extends State<RegistroPage> {
           const Center(
             heightFactor: 2,
             child: Text(
-              'Easy Wash',
+              'Cadastra-se como:',
               textDirection: TextDirection.ltr,
               style: TextStyle(
                 fontFamily: 'Ubuntu',
@@ -49,14 +52,14 @@ class _RegistroPageState extends State<RegistroPage> {
             child: ListView(shrinkWrap: true, children: [
               RadioListTile(
                   value: 1,
-                  title: const Text("Registra como Usuário"),
+                  title: const Text("Usuário"),
                   groupValue: _tipocliente,
                   onChanged: (val) => setState(() {
                         _tipocliente = val!;
                       })),
               RadioListTile(
                   value: 2,
-                  title: const Text("Registra como Lavanderia"),
+                  title: const Text("Lavanderia"),
                   groupValue: _tipocliente,
                   onChanged: (val) => setState(() {
                         _tipocliente = val!;
@@ -86,7 +89,34 @@ class _RegistroPageState extends State<RegistroPage> {
                   style: TextStyle(color: Colors.black)),
             ),
           ),
+          Container(
+            margin: const EdgeInsets.only(top: 20.0),
+            child: ElevatedButton(
+              onPressed: () {
+                voltar();
+              },
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(216, 40),
+                backgroundColor: const Color.fromARGB(255, 71, 212, 255),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+              child:
+                  const Text('VOLTAR', style: TextStyle(color: Colors.black)),
+            ),
+          ),
         ]),
+      ),
+    );
+  }
+
+  voltar() async {
+    // ignore: use_build_context_synchronously
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const LoginPage(),
       ),
     );
   }

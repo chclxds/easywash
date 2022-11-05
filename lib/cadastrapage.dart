@@ -12,7 +12,7 @@ class _CadastrarPageState extends State<CadastrarPage> {
   final _formKey = GlobalKey<FormState>();
   final _senhaController = TextEditingController();
   final _nomeController = TextEditingController();
-  final _dnController = TextEditingController();
+  final _cnpjController = TextEditingController();
   final _emailController = TextEditingController();
   bool _verSenha = false;
 
@@ -43,25 +43,25 @@ class _CadastrarPageState extends State<CadastrarPage> {
                 TextFormField(
                   controller: _nomeController,
                   decoration: const InputDecoration(
-                    label: Text('Nome'),
-                    hintText: 'Nome Completo',
+                    label: Text('Nome da Lavanderia'),
+                    hintText: 'EasyWash',
                   ),
                   validator: (nome) {
                     if (nome == null || nome.isEmpty) {
-                      return 'Digite seu Nome Compelto';
+                      return 'Digite o nome da Lavanderia';
                     }
                     return null;
                   },
                 ),
                 TextFormField(
-                  controller: _dnController,
+                  controller: _cnpjController,
                   decoration: const InputDecoration(
-                    label: Text('Data Nascimento'),
-                    hintText: 'DD/MM/AAAA',
+                    label: Text('CNPJ'),
+                    hintText: '00.000.000/0001-00',
                   ),
-                  validator: (dn) {
-                    if (dn == null || dn.isEmpty) {
-                      return 'Digite sua Data de Nascimento';
+                  validator: (cnpj) {
+                    if (cnpj == null || cnpj.isEmpty) {
+                      return 'Digite o CNPJ';
                     }
                     return null;
                   },
