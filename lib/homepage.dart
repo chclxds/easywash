@@ -1,3 +1,4 @@
+import 'package:easywash/visualizarservico.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -38,6 +39,59 @@ class HomePage extends StatelessWidget {
                         fontFamily: 'Ubuntu',
                         color: Color.fromARGB(255, 51, 51, 51),
                       )),
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(25),
+                  decoration: BoxDecoration(
+                      color: Colors.blueGrey[100],
+                      borderRadius: BorderRadius.circular(8)),
+                  child: const Text('Serviço 1'),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Container(
+                  padding: const EdgeInsets.all(25),
+                  decoration: BoxDecoration(
+                      color: Colors.blueGrey[100],
+                      borderRadius: BorderRadius.circular(8)),
+                  child: const Text('Serviço 2'),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Container(
+                  padding: const EdgeInsets.all(25),
+                  decoration: BoxDecoration(
+                      color: Colors.blueGrey[100],
+                      borderRadius: BorderRadius.circular(8)),
+                  child: const Text('Serviço 3'),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const VerServico()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(216, 40),
+                    backgroundColor: const Color.fromARGB(255, 71, 212, 255),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                  child: const Text(
+                    'Ver Serviço',
+                    style: TextStyle(color: Colors.black),
+                  ),
                 ),
                 const SizedBox(
                   height: 12,

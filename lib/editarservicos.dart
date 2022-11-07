@@ -1,4 +1,3 @@
-import 'package:easywash/homepage.dart';
 import 'package:flutter/material.dart';
 
 import 'servicos.dart';
