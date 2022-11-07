@@ -1,4 +1,4 @@
-import 'package:easywash/homepage.dart';
+import 'package:easywash/editarservicos.dart';
 import 'package:flutter/material.dart';
 
 class ServicosCadastro extends StatefulWidget {
@@ -43,6 +43,36 @@ class _ServicosCadastroState extends State<ServicosCadastro> {
                         color: Color.fromARGB(255, 51, 51, 51),
                       )),
                 ),
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(25),
+                  decoration: BoxDecoration(
+                      color: Colors.blueGrey[100],
+                      borderRadius: BorderRadius.circular(8)),
+                  child: const Text('Serviço 1'),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Container(
+                  padding: const EdgeInsets.all(25),
+                  decoration: BoxDecoration(
+                      color: Colors.blueGrey[100],
+                      borderRadius: BorderRadius.circular(8)),
+                  child: const Text('Serviço 2'),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Container(
+                  padding: const EdgeInsets.all(25),
+                  decoration: BoxDecoration(
+                      color: Colors.blueGrey[100],
+                      borderRadius: BorderRadius.circular(8)),
+                  child: const Text('Serviço 3'),
+                ),
                 const SizedBox(
                   height: 12,
                 ),
@@ -57,7 +87,7 @@ class _ServicosCadastroState extends State<ServicosCadastro> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
-                  child: const Text('ENTRAR',
+                  child: const Text('Cadastrar Serviço',
                       style: TextStyle(color: Colors.black)),
                 ),
               ],
@@ -72,7 +102,7 @@ class _ServicosCadastroState extends State<ServicosCadastro> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => const HomePage(),
+        builder: (context) => const ServicoEditar(),
       ),
     );
   }
