@@ -49,7 +49,7 @@ class _VerServicoState extends State<VerServico> {
                   child: const Text('Nome'),
                 ),
                 const SizedBox(
-                  height: 12,
+                  height: 20,
                 ),
                 Container(
                   padding: const EdgeInsets.all(25),
@@ -59,7 +59,7 @@ class _VerServicoState extends State<VerServico> {
                   child: const Text('Quantidade de Peças'),
                 ),
                 const SizedBox(
-                  height: 12,
+                  height: 20,
                 ),
                 Container(
                   padding: const EdgeInsets.all(25),
@@ -69,7 +69,7 @@ class _VerServicoState extends State<VerServico> {
                   child: const Text('Valor'),
                 ),
                 const SizedBox(
-                  height: 12,
+                  height: 20,
                 ),
                 Container(
                   padding: const EdgeInsets.all(25),
@@ -79,34 +79,34 @@ class _VerServicoState extends State<VerServico> {
                   child: const Text('Descrição'),
                 ),
                 const SizedBox(
-                  height: 12,
+                  height: 20,
                 ),
                 ElevatedButton(
                   onPressed: () {
                     contratar();
                   },
                   style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(216, 40),
+                    minimumSize: const Size(216, 50),
                     backgroundColor: const Color.fromARGB(255, 71, 212, 255),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(5.0),
                     ),
                   ),
                   child: const Text('CONTRATAR',
                       style: TextStyle(color: Colors.black)),
                 ),
                 const SizedBox(
-                  height: 12,
+                  height: 20,
                 ),
                 ElevatedButton(
                   onPressed: () {
                     voltar();
                   },
                   style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(216, 40),
+                    minimumSize: const Size(216, 50),
                     backgroundColor: const Color.fromARGB(255, 71, 212, 255),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(5.0),
                     ),
                   ),
                   child: const Text('VOLTAR',

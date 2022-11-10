@@ -37,7 +37,7 @@ class _RegistroPageState extends State<RegistroPage> {
           const Center(
             heightFactor: 2,
             child: Text(
-              'Cadastra-se como:',
+              'Cadastrar-se como:',
               textDirection: TextDirection.ltr,
               style: TextStyle(
                 fontFamily: 'Ubuntu',
@@ -54,6 +54,7 @@ class _RegistroPageState extends State<RegistroPage> {
                   value: 1,
                   title: const Text("Usuário"),
                   groupValue: _tipocliente,
+                  activeColor: const Color.fromARGB(255, 71, 212, 255),
                   onChanged: (val) => setState(() {
                         _tipocliente = val!;
                       })),
@@ -61,6 +62,7 @@ class _RegistroPageState extends State<RegistroPage> {
                   value: 2,
                   title: const Text("Lavanderia"),
                   groupValue: _tipocliente,
+                  activeColor: const Color.fromARGB(255, 71, 212, 255),
                   onChanged: (val) => setState(() {
                         _tipocliente = val!;
                       })),
@@ -80,10 +82,10 @@ class _RegistroPageState extends State<RegistroPage> {
                 }
               },
               style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(216, 40),
+                  minimumSize: const Size(216, 50),
                   backgroundColor: const Color.fromARGB(255, 71, 212, 255),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(5.0),
                   )),
               child: const Text("CONTINUAR",
                   style: TextStyle(color: Colors.black)),
@@ -96,10 +98,10 @@ class _RegistroPageState extends State<RegistroPage> {
                 voltar();
               },
               style: ElevatedButton.styleFrom(
-                minimumSize: const Size(216, 40),
+                minimumSize: const Size(216, 50),
                 backgroundColor: const Color.fromARGB(255, 71, 212, 255),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(5.0),
                 ),
               ),
               child:
