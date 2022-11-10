@@ -63,51 +63,57 @@ class _LoginPageState extends State<LoginPage> {
                   height: 200,
                   width: 200,
                 ),
-                TextFormField(
-                  controller: _emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                    label: Text('E-mail'),
-                    hintText: 'nome@email.com',
+                SizedBox(
+                  width: 250,
+                  child: TextFormField(
+                    controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: const InputDecoration(
+                      label: Text('E-mail'),
+                      hintText: 'nome@email.com',
+                    ),
+                    validator: (email) {
+                      if (email == null || email.isEmpty) {
+                        return 'Digite seu E-mail';
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (email) {
-                    if (email == null || email.isEmpty) {
-                      return 'Digite seu E-mail';
-                    }
-                    return null;
-                  },
                 ),
-                TextFormField(
-                  controller: _senhaController,
-                  keyboardType: TextInputType.visiblePassword,
-                  obscureText: !_verSenha,
-                  decoration: InputDecoration(
-                    label: const Text('Senha'),
-                    hintText: 'Digite sua senha',
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          _verSenha = !_verSenha;
-                        });
-                      },
-                      icon: Icon(
-                        _verSenha
-                            ? Icons.visibility_off_outlined
-                            : Icons.visibility_outlined,
+                SizedBox(
+                  width: 250,
+                  child: TextFormField(
+                    controller: _senhaController,
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: !_verSenha,
+                    decoration: InputDecoration(
+                      label: const Text('Senha'),
+                      hintText: 'Digite sua senha',
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _verSenha = !_verSenha;
+                          });
+                        },
+                        icon: Icon(
+                          _verSenha
+                              ? Icons.visibility_off_outlined
+                              : Icons.visibility_outlined,
+                        ),
                       ),
                     ),
+                    validator: (senha) {
+                      if (senha == null || senha.isEmpty) {
+                        return 'Digite sua Senha';
+                      } else if (senha.length < 8) {
+                        return 'Digite Uma Senha Maior';
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (senha) {
-                    if (senha == null || senha.isEmpty) {
-                      return 'Digite sua Senha';
-                    } else if (senha.length < 8) {
-                      return 'Digite Uma Senha Maior';
-                    }
-                    return null;
-                  },
                 ),
                 const SizedBox(
-                  height: 12,
+                  height: 20,
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -116,27 +122,27 @@ class _LoginPageState extends State<LoginPage> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(216, 40),
+                    minimumSize: const Size(216, 50),
                     backgroundColor: const Color.fromARGB(255, 71, 212, 255),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(5.0),
                     ),
                   ),
                   child: const Text('ENTRAR',
                       style: TextStyle(color: Colors.black)),
                 ),
                 const SizedBox(
-                  height: 12,
+                  height: 20,
                 ),
                 ElevatedButton(
                   onPressed: () {
                     cadastrar();
                   },
                   style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(216, 40),
+                    minimumSize: const Size(216, 50),
                     backgroundColor: const Color.fromARGB(255, 71, 212, 255),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(5.0),
                     ),
                   ),
                   child: const Text('CADASTRAR',

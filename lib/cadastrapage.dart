@@ -111,7 +111,7 @@ class _CadastrarPageState extends State<CadastrarPage> {
                   },
                 ),
                 const SizedBox(
-                  height: 12,
+                  height: 20,
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -120,10 +120,10 @@ class _CadastrarPageState extends State<CadastrarPage> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(216, 40),
+                    minimumSize: const Size(216, 50),
                     backgroundColor: const Color.fromARGB(255, 71, 212, 255),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(5.0),
                     ),
                   ),
                   child: const Text('Cadastrar',
