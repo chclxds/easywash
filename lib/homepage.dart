@@ -15,6 +15,14 @@ class HomePage extends StatelessWidget {
           'Página Inicial',
           style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
         ),
+        actions: [
+          GestureDetector(
+            onTap: () {
+              FirebaseAuth.instance.signOut();
+            },
+            child: const Icon(Icons.logout),
+          ),
+        ],
         backgroundColor: const Color.fromRGBO(61, 144, 171, 1),
         leading: Image.asset('assets/IconTop.png'),
       ),
@@ -93,34 +101,11 @@ class HomePage extends StatelessWidget {
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    _signOut();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(216, 50),
-                    backgroundColor: const Color.fromARGB(255, 71, 212, 255),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                  ),
-                  child: const Text(
-                    'LOGOUT',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
               ],
             ),
           ),
         ),
       ),
     );
-  }
-
-  Future<void> _signOut() async {
-    await FirebaseAuth.instance.signOut();
   }
 }

@@ -1,5 +1,6 @@
 import 'package:easywash/editarservicos.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ServicosCadastro extends StatefulWidget {
   const ServicosCadastro({super.key});
@@ -18,6 +19,14 @@ class _ServicosCadastroState extends State<ServicosCadastro> {
           'Serviços',
           style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
         ),
+        actions: [
+          GestureDetector(
+            onTap: () {
+              FirebaseAuth.instance.signOut();
+            },
+            child: const Icon(Icons.logout),
+          ),
+        ],
         backgroundColor: const Color.fromRGBO(61, 144, 171, 1),
         leading: Image.asset('assets/IconTop.png'),
       ),
