@@ -10,7 +10,7 @@ Future<Lavanderia> createLavanderia(
   String email,
 ) async {
   final response = await http.post(
-      Uri.parse('https://easywash-backend.herokuapp.com/usuarios'),
+      Uri.parse('https://easywash-backend.herokuapp.com/lavanderias'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -20,7 +20,7 @@ Future<Lavanderia> createLavanderia(
         'cnpj': cnpj,
         'email': email,
       }));
-  if (response.statusCode == 201) {
+  if (response.statusCode == 200) {
     return Lavanderia.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('Falha ao cadastrar lavanderia');
