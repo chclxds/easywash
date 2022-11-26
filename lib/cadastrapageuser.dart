@@ -1,5 +1,60 @@
+// ignore_for_file: avoid_print
+
 import 'package:easywash/loginpage.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+Future<Usuario> createUsuario(
+  String nome,
+  String senha,
+  String cpf,
+  String email,
+) async {
+  final response = await http.post(
+      Uri.parse('https://easywash-backend.herokuapp.com/usuarios'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'nome': nome,
+        'senha': senha,
+        'cpf': cpf,
+        'email': email,
+      }));
+  print(response);
+  print(response.statusCode);
+  print(response.body);
+  if (response.statusCode == 200) {
+    return Usuario.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Falha ao cadastrar Usuario');
+  }
+}
+
+class Usuario {
+  final String id;
+  final String nome;
+  final String senha;
+  final String cpf;
+  final String email;
+  const Usuario({
+    required this.id,
+    required this.nome,
+    required this.senha,
+    required this.cpf,
+    required this.email,
+  });
+  factory Usuario.fromJson(Map<String, dynamic> json) {
+    return Usuario(
+      id: json['id'],
+      nome: json['nome'],
+      senha: json['senha'],
+      cpf: json['cpf'],
+      email: json['email'],
+    );
+  }
+}
 
 class CadastrarPageUser extends StatefulWidget {
   const CadastrarPageUser({super.key});
@@ -10,11 +65,13 @@ class CadastrarPageUser extends StatefulWidget {
 
 class _CadastrarPageUserState extends State<CadastrarPageUser> {
   final _formKey = GlobalKey<FormState>();
-  final _senhaController = TextEditingController();
-  final _nomeController = TextEditingController();
-  final _dnController = TextEditingController();
-  final _emailController = TextEditingController();
+  final TextEditingController _senhaController = TextEditingController();
+  final TextEditingController _nomeController = TextEditingController();
+  final TextEditingController _cpfController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   bool _verSenha = false;
+
+  Future<Usuario>? _futureUser;
 
   @override
   Widget build(BuildContext context) {
@@ -54,14 +111,14 @@ class _CadastrarPageUserState extends State<CadastrarPageUser> {
                   },
                 ),
                 TextFormField(
-                  controller: _dnController,
+                  controller: _cpfController,
                   decoration: const InputDecoration(
-                    label: Text('Data Nascimento'),
-                    hintText: 'DD/MM/AAAA',
+                    label: Text('CPF'),
+                    hintText: '000.000.000-00',
                   ),
-                  validator: (dn) {
-                    if (dn == null || dn.isEmpty) {
-                      return 'Digite sua Data de Nascimento';
+                  validator: (cpf) {
+                    if (cpf == null || cpf.isEmpty) {
+                      return 'Digite seu CPF';
                     }
                     return null;
                   },
@@ -114,9 +171,14 @@ class _CadastrarPageUserState extends State<CadastrarPageUser> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    if (_formKey.currentState!.validate()) {
+                    setState(() {
+                      _futureUser = createUsuario(
+                          _nomeController.text,
+                          _senhaController.text,
+                          _cpfController.text,
+                          _emailController.text);
                       cadastrar();
-                    }
+                    });
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(216, 50),
@@ -134,6 +196,19 @@ class _CadastrarPageUserState extends State<CadastrarPageUser> {
         ),
       ),
     );
+  }
+
+  FutureBuilder<Usuario> buildFutureBuilder() {
+    return FutureBuilder(
+        future: _futureUser,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Text(snapshot.data!.nome);
+          } else if (snapshot.hasError) {
+            return Text('${snapshot.error}');
+          }
+          return const CircularProgressIndicator();
+        });
   }
 
   cadastrar() async {

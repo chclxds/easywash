@@ -1,6 +1,55 @@
+import 'dart:convert';
 import 'package:easywash/servicos.dart';
 import 'package:flutter/material.dart';
-//import 'registropage.dart';
+import 'package:http/http.dart' as http;
+
+Future<Lavanderia> createLavanderia(
+  String nome,
+  String senha,
+  String cnpj,
+  String email,
+) async {
+  final response = await http.post(
+      Uri.parse('https://easywash-backend.herokuapp.com/usuarios'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'nome': nome,
+        'senha': senha,
+        'cnpj': cnpj,
+        'email': email,
+      }));
+  if (response.statusCode == 201) {
+    return Lavanderia.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Falha ao cadastrar lavanderia');
+  }
+}
+
+class Lavanderia {
+  final String id;
+  final String nome;
+  final String senha;
+  final String cnpj;
+  final String email;
+  const Lavanderia({
+    required this.id,
+    required this.nome,
+    required this.senha,
+    required this.cnpj,
+    required this.email,
+  });
+  factory Lavanderia.fromJson(Map<String, dynamic> json) {
+    return Lavanderia(
+      id: json['id'],
+      nome: json['nome'],
+      senha: json['senha'],
+      cnpj: json['cnpj'],
+      email: json['email'],
+    );
+  }
+}
 
 class CadastrarPage extends StatefulWidget {
   const CadastrarPage({super.key});
@@ -10,12 +59,13 @@ class CadastrarPage extends StatefulWidget {
 }
 
 class _CadastrarPageState extends State<CadastrarPage> {
-  final _formKey = GlobalKey<FormState>();
-  final _senhaController = TextEditingController();
-  final _nomeController = TextEditingController();
-  final _cnpjController = TextEditingController();
-  final _emailController = TextEditingController();
+  final TextEditingController _senhaController = TextEditingController();
+  final TextEditingController _nomeController = TextEditingController();
+  final TextEditingController _cnpjController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   bool _verSenha = false;
+
+  Future<Lavanderia>? _futureLavanderia;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +86,6 @@ class _CadastrarPageState extends State<CadastrarPage> {
           ),
         ),
         child: Form(
-          key: _formKey,
           child: Container(
             margin: const EdgeInsets.only(right: 20, left: 20, top: 20),
             child: Column(
@@ -115,9 +164,14 @@ class _CadastrarPageState extends State<CadastrarPage> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    if (_formKey.currentState!.validate()) {
+                    setState(() {
+                      _futureLavanderia = createLavanderia(
+                          _nomeController.text,
+                          _senhaController.text,
+                          _cnpjController.text,
+                          _emailController.text);
                       cadastrar();
-                    }
+                    });
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(216, 50),
@@ -135,6 +189,19 @@ class _CadastrarPageState extends State<CadastrarPage> {
         ),
       ),
     );
+  }
+
+  FutureBuilder<Lavanderia> buildFutureBuilder() {
+    return FutureBuilder(
+        future: _futureLavanderia,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Text(snapshot.data!.nome);
+          } else if (snapshot.hasError) {
+            return Text('${snapshot.error}');
+          }
+          return const CircularProgressIndicator();
+        });
   }
 
   cadastrar() async {
