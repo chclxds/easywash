@@ -1,6 +1,59 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'servicos.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+Future<Usuario> createUsuario(
+  String titulo,
+  String descricao,
+  String valor,
+) async {
+  final response = await http.post(
+      Uri.parse('https://easywash-backend.herokuapp.com/servicos'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'nome': titulo,
+        'senha': descricao,
+        'cpf': valor,
+      }));
+  print(response);
+  print(response.statusCode);
+  print(response.body);
+  if (response.statusCode == 200) {
+    return Usuario.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Falha ao cadastrar Usuario');
+  }
+}
+
+class Usuario {
+  final String id;
+  final String titulo;
+  final String descricao;
+  final String valor;
+  final String idLavanderia;
+  const Usuario({
+    required this.id,
+    required this.titulo,
+    required this.descricao,
+    required this.valor,
+    required this.idLavanderia,
+  });
+  factory Usuario.fromJson(Map<String, dynamic> json) {
+    return Usuario(
+      id: json['id'],
+      titulo: json['titulo'],
+      descricao: json['descricao'],
+      valor: json['valor'],
+      idLavanderia: json['idLavanderia'],
+    );
+  }
+}
 
 class ServicoEditar extends StatefulWidget {
   const ServicoEditar({super.key});
@@ -10,10 +63,11 @@ class ServicoEditar extends StatefulWidget {
 }
 
 class _ServicoEditarState extends State<ServicoEditar> {
-  final _nomeController = TextEditingController();
-  final _qtdController = TextEditingController();
+  final _tituloController = TextEditingController();
+  final _descricaoController = TextEditingController();
   final _valorController = TextEditingController();
-  final _descController = TextEditingController();
+
+  Future<Usuario>? _futureServico;
 
   @override
   Widget build(BuildContext context) {
@@ -44,113 +98,121 @@ class _ServicoEditarState extends State<ServicoEditar> {
           ),
         ),
         child: Form(
-          child: Container(
-            margin: const EdgeInsets.only(right: 20, left: 20, top: 20),
-            child: Column(
-              children: [
-                const Center(
-                  heightFactor: 2,
-                  child: Text('Tipo de Serviços',
-                      textDirection: TextDirection.ltr,
-                      style: TextStyle(
-                        fontFamily: 'Ubuntu',
-                        color: Color.fromARGB(255, 51, 51, 51),
-                      )),
-                ),
-                TextFormField(
-                  controller: _nomeController,
-                  decoration: const InputDecoration(
-                    label: Text('Nome'),
-                    hintText: 'Tipo do Serviço',
+          child: (_futureServico == null)
+              ? Container(
+                  margin: const EdgeInsets.only(right: 20, left: 20, top: 20),
+                  child: Column(
+                    children: [
+                      const Center(
+                        heightFactor: 2,
+                        child: Text('Tipo de Serviços',
+                            textDirection: TextDirection.ltr,
+                            style: TextStyle(
+                              fontFamily: 'Ubuntu',
+                              color: Color.fromARGB(255, 51, 51, 51),
+                            )),
+                      ),
+                      TextFormField(
+                        controller: _tituloController,
+                        decoration: const InputDecoration(
+                          label: Text('Nome'),
+                          hintText: 'Tipo do Serviço',
+                        ),
+                        validator: (nome) {
+                          if (nome == null || nome.isEmpty) {
+                            return 'Ex: Lavagem Clean';
+                          }
+                          return null;
+                        },
+                      ),
+                      TextFormField(
+                        controller: _valorController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          label: Text('Valor'),
+                          hintText: '25,00',
+                        ),
+                        validator: (valor) {
+                          if (valor == null || valor.isEmpty) {
+                            return 'Valor do Serviço';
+                          }
+                          return null;
+                        },
+                      ),
+                      TextFormField(
+                        controller: _descricaoController,
+                        decoration: const InputDecoration(
+                          label: Text('Descrição'),
+                          hintText: 'Roupas Leves',
+                        ),
+                        validator: (desc) {
+                          if (desc == null || desc.isEmpty) {
+                            return 'Digite uma descrição';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          _futureServico = createUsuario(
+                            _tituloController.text,
+                            _descricaoController.text,
+                            _valorController.text,
+                          );
+                          salvar();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(216, 50),
+                          backgroundColor:
+                              const Color.fromARGB(255, 71, 212, 255),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                        child: const Text('SALVAR',
+                            style: TextStyle(color: Colors.black)),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          cancelar();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(216, 40),
+                          backgroundColor:
+                              const Color.fromARGB(255, 71, 212, 255),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                        child: const Text('CANCELAR',
+                            style: TextStyle(color: Colors.black)),
+                      ),
+                    ],
                   ),
-                  validator: (nome) {
-                    if (nome == null || nome.isEmpty) {
-                      return 'Ex: Lavagem Clean';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: _qtdController,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    label: Text('Quantidade'),
-                    hintText: '50',
-                  ),
-                  validator: (qtd) {
-                    if (qtd == null || qtd.isEmpty) {
-                      return 'Quantidade de Peças';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: _valorController,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    label: Text('Valor'),
-                    hintText: '25,00',
-                  ),
-                  validator: (valor) {
-                    if (valor == null || valor.isEmpty) {
-                      return 'Valor do Serviço';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: _descController,
-                  decoration: const InputDecoration(
-                    label: Text('Descrição'),
-                    hintText: 'Roupas Leves',
-                  ),
-                  validator: (desc) {
-                    if (desc == null || desc.isEmpty) {
-                      return 'Digite uma descrição';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    salvar();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(216, 50),
-                    backgroundColor: const Color.fromARGB(255, 71, 212, 255),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                  ),
-                  child: const Text('SALVAR',
-                      style: TextStyle(color: Colors.black)),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    cancelar();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(216, 40),
-                    backgroundColor: const Color.fromARGB(255, 71, 212, 255),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                  ),
-                  child: const Text('CANCELAR',
-                      style: TextStyle(color: Colors.black)),
-                ),
-              ],
-            ),
-          ),
+                )
+              : buildFutureBuilder(),
         ),
       ),
     );
+  }
+
+  FutureBuilder<Usuario> buildFutureBuilder() {
+    return FutureBuilder(
+        future: _futureServico,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Text(snapshot.data!.titulo);
+          } else if (snapshot.hasError) {
+            return Text('${snapshot.error}');
+          }
+          return const CircularProgressIndicator();
+        });
   }
 
   salvar() async {
