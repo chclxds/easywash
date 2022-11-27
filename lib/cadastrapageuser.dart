@@ -124,8 +124,8 @@ class _CadastrarPageUserState extends State<CadastrarPageUser> {
         child: Form(
           key: _formKey,
           child: (_futureUser == null)
-              ? Container(
-                  margin: const EdgeInsets.only(right: 20, left: 20, top: 20),
+              ? SingleChildScrollView(
+                  padding: const EdgeInsets.only(right: 20, left: 20, top: 20),
                   child: Column(
                     children: [
                       TextFormField(
@@ -274,20 +274,22 @@ class _CadastrarPageUserState extends State<CadastrarPageUser> {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          setState(() {
-                            _futureUser = createUsuario(
-                              _nomeController.text,
-                              _senhaController.text,
-                              _cpfController.text,
-                              _emailController.text,
-                              _telefoneController.text,
-                              _ruaController.text,
-                              _bairroController.text,
-                              _cidadeController.text,
-                              _ufController.text,
-                            );
+                          if (_formKey.currentState!.validate()) {
                             cadastrar();
-                          });
+                            setState(() {
+                              _futureUser = createUsuario(
+                                _nomeController.text,
+                                _senhaController.text,
+                                _cpfController.text,
+                                _emailController.text,
+                                _telefoneController.text,
+                                _ruaController.text,
+                                _bairroController.text,
+                                _cidadeController.text,
+                                _ufController.text,
+                              );
+                            });
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(216, 50),

@@ -94,6 +94,7 @@ class CadastrarPage extends StatefulWidget {
 }
 
 class _CadastrarPageState extends State<CadastrarPage> {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _senhaController = TextEditingController();
   final TextEditingController _nomeController = TextEditingController();
   final TextEditingController _cnpjController = TextEditingController();
@@ -127,9 +128,10 @@ class _CadastrarPageState extends State<CadastrarPage> {
           ),
         ),
         child: Form(
+          key: _formKey,
           child: (_futureLavanderia == null)
-              ? Container(
-                  margin: const EdgeInsets.only(right: 20, left: 20, top: 20),
+              ? SingleChildScrollView(
+                  padding: const EdgeInsets.only(right: 20, left: 20, top: 20),
                   child: Column(
                     children: [
                       TextFormField(
@@ -289,6 +291,8 @@ class _CadastrarPageState extends State<CadastrarPage> {
                       ),
                       ElevatedButton(
                         onPressed: () {
+                          if (_formKey.currentState!.validate()) {}
+                          cadastrar();
                           setState(() {
                             _futureLavanderia = createLavanderia(
                               _nomeController.text,
@@ -302,7 +306,6 @@ class _CadastrarPageState extends State<CadastrarPage> {
                               _ufController.text,
                               _cepController.text,
                             );
-                            cadastrar();
                           });
                         },
                         style: ElevatedButton.styleFrom(

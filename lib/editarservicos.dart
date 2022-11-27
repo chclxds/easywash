@@ -27,7 +27,7 @@ Future<Usuario> createUsuario(
   if (response.statusCode == 200) {
     return Usuario.fromJson(jsonDecode(response.body));
   } else {
-    throw Exception('Falha ao cadastrar Usuario');
+    throw Exception('Falha ao cadastrar Serviço');
   }
 }
 
@@ -63,9 +63,10 @@ class ServicoEditar extends StatefulWidget {
 }
 
 class _ServicoEditarState extends State<ServicoEditar> {
-  final _tituloController = TextEditingController();
-  final _descricaoController = TextEditingController();
-  final _valorController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _tituloController = TextEditingController();
+  final TextEditingController _descricaoController = TextEditingController();
+  final TextEditingController _valorController = TextEditingController();
 
   Future<Usuario>? _futureServico;
 
@@ -98,9 +99,10 @@ class _ServicoEditarState extends State<ServicoEditar> {
           ),
         ),
         child: Form(
+          key: _formKey,
           child: (_futureServico == null)
-              ? Container(
-                  margin: const EdgeInsets.only(right: 20, left: 20, top: 20),
+              ? SingleChildScrollView(
+                  padding: const EdgeInsets.only(right: 20, left: 20, top: 20),
                   child: Column(
                     children: [
                       const Center(
