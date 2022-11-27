@@ -17,9 +17,9 @@ Future<Usuario> createUsuario(
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-        'nome': titulo,
-        'senha': descricao,
-        'cpf': valor,
+        'titulo': titulo,
+        'descricao': descricao,
+        'valor': valor,
       }));
   print(response);
   print(response.statusCode);
@@ -115,11 +115,11 @@ class _ServicoEditarState extends State<ServicoEditar> {
                       TextFormField(
                         controller: _tituloController,
                         decoration: const InputDecoration(
-                          label: Text('Nome'),
+                          label: Text('Titulo'),
                           hintText: 'Tipo do Serviço',
                         ),
-                        validator: (nome) {
-                          if (nome == null || nome.isEmpty) {
+                        validator: (titulo) {
+                          if (titulo == null || titulo.isEmpty) {
                             return 'Ex: Lavagem Clean';
                           }
                           return null;
