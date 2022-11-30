@@ -124,6 +124,7 @@ class _CadastrarPageState extends State<CadastrarPage> {
           image: DecorationImage(
             alignment: Alignment(0.0, -1.0),
             image: AssetImage('assets/backgroud-prelogin.png'),
+            opacity: 0.75,
             fit: BoxFit.cover,
           ),
         ),
@@ -136,6 +137,7 @@ class _CadastrarPageState extends State<CadastrarPage> {
                     children: [
                       TextFormField(
                         controller: _nomeController,
+                        keyboardType: TextInputType.name,
                         decoration: const InputDecoration(
                           label: Text('Nome da Lavanderia'),
                           hintText: 'EasyWash',
@@ -177,6 +179,7 @@ class _CadastrarPageState extends State<CadastrarPage> {
                       ),
                       TextFormField(
                         controller: _cnpjController,
+                        keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
                           label: Text('CNPJ'),
                           hintText: '00.000.000/0001-00',
@@ -263,7 +266,7 @@ class _CadastrarPageState extends State<CadastrarPage> {
                         obscureText: !_verSenha,
                         decoration: InputDecoration(
                           label: const Text('Senha'),
-                          hintText: 'Digite sua senha',
+                          hintText: 'Digite sua senha com 8 caracteres ou mais',
                           suffixIcon: IconButton(
                             onPressed: () {
                               setState(() {
@@ -318,6 +321,9 @@ class _CadastrarPageState extends State<CadastrarPage> {
                         ),
                         child: const Text('Cadastrar',
                             style: TextStyle(color: Colors.black)),
+                      ),
+                      const SizedBox(
+                        height: 20,
                       ),
                     ],
                   ),

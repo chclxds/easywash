@@ -38,6 +38,7 @@ class _HomePageLavanderiaState extends State<HomePageLavanderia> {
           image: DecorationImage(
             alignment: Alignment(0.0, -1.0),
             image: AssetImage('assets/backgroud-prelogin.png'),
+            opacity: 0.75,
             fit: BoxFit.cover,
           ),
         ),
@@ -50,7 +51,7 @@ class _HomePageLavanderiaState extends State<HomePageLavanderia> {
               style: TextStyle(
                 fontFamily: 'Ubuntu',
                 fontSize: 56,
-                color: Color.fromARGB(255, 51, 51, 51),
+                color: Color.fromARGB(255, 0, 0, 0),
               ),
             ),
           ),
@@ -62,7 +63,7 @@ class _HomePageLavanderiaState extends State<HomePageLavanderia> {
                   value: 1,
                   title: const Text("Consultar Pedidos"),
                   groupValue: _tiposervico,
-                  activeColor: const Color.fromARGB(255, 71, 212, 255),
+                  activeColor: const Color.fromARGB(255, 0, 0, 255),
                   onChanged: (val) => setState(() {
                         _tiposervico = val!;
                       })),
@@ -70,7 +71,7 @@ class _HomePageLavanderiaState extends State<HomePageLavanderia> {
                   value: 2,
                   title: const Text("Gerenciar Serviços"),
                   groupValue: _tiposervico,
-                  activeColor: const Color.fromARGB(255, 71, 212, 255),
+                  activeColor: const Color.fromARGB(255, 0, 0, 255),
                   onChanged: (val) => setState(() {
                         _tiposervico = val!;
                       })),

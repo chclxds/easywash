@@ -37,6 +37,7 @@ class _LoginPageState extends State<LoginPage> {
           image: DecorationImage(
             alignment: Alignment(0.0, -1.0),
             image: AssetImage('assets/backgroud-prelogin.png'),
+            opacity: 0.75,
             fit: BoxFit.cover,
           ),
         ),
@@ -68,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
                       label: Text('E-mail'),
-                      hintText: 'email@email.com',
+                      hintText: 'nome@email.com',
                     ),
                     validator: (email) {
                       if (email == null || email.isEmpty) {
@@ -86,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                     obscureText: !_verSenha,
                     decoration: InputDecoration(
                       label: const Text('Senha'),
-                      hintText: 'Digite sua senha',
+                      hintText: 'Digite sua senha com 8 caracteres ou mais',
                       suffixIcon: IconButton(
                         onPressed: () {
                           setState(() {

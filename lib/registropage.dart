@@ -30,6 +30,7 @@ class _RegistroPageState extends State<RegistroPage> {
           image: DecorationImage(
             alignment: Alignment(0.0, -1.0),
             image: AssetImage('assets/backgroud-prelogin.png'),
+            opacity: 0.75,
             fit: BoxFit.cover,
           ),
         ),
@@ -42,7 +43,7 @@ class _RegistroPageState extends State<RegistroPage> {
               style: TextStyle(
                 fontFamily: 'Ubuntu',
                 fontSize: 56,
-                color: Color.fromARGB(255, 51, 51, 51),
+                color: Color.fromARGB(255, 0, 0, 0),
               ),
             ),
           ),
@@ -54,7 +55,7 @@ class _RegistroPageState extends State<RegistroPage> {
                   value: 1,
                   title: const Text("Usuário"),
                   groupValue: _tipocliente,
-                  activeColor: const Color.fromARGB(255, 71, 212, 255),
+                  activeColor: const Color.fromARGB(255, 0, 0, 255),
                   onChanged: (val) => setState(() {
                         _tipocliente = val!;
                       })),
@@ -62,7 +63,7 @@ class _RegistroPageState extends State<RegistroPage> {
                   value: 2,
                   title: const Text("Lavanderia"),
                   groupValue: _tipocliente,
-                  activeColor: const Color.fromARGB(255, 71, 212, 255),
+                  activeColor: const Color.fromARGB(255, 0, 0, 255),
                   onChanged: (val) => setState(() {
                         _tipocliente = val!;
                       })),

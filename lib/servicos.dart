@@ -36,6 +36,7 @@ class _ServicosCadastroState extends State<ServicosCadastro> {
           image: DecorationImage(
             alignment: Alignment(0.0, -1.0),
             image: AssetImage('assets/backgroud-prelogin.png'),
+            opacity: 0.75,
             fit: BoxFit.cover,
           ),
         ),
@@ -46,12 +47,14 @@ class _ServicosCadastroState extends State<ServicosCadastro> {
               children: [
                 const Center(
                   heightFactor: 2,
-                  child: Text('Tipo de Serviços',
-                      textDirection: TextDirection.ltr,
-                      style: TextStyle(
-                        fontFamily: 'Ubuntu',
-                        color: Color.fromARGB(255, 51, 51, 51),
-                      )),
+                  child: Text(
+                    'Tipo de Serviços',
+                    textDirection: TextDirection.ltr,
+                    style: TextStyle(
+                      fontFamily: 'Ubuntu',
+                      color: Color.fromARGB(255, 51, 51, 51),
+                    ),
+                  ),
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16.0),
@@ -100,6 +103,23 @@ class _ServicosCadastroState extends State<ServicosCadastro> {
                   child: const Text('Cadastrar Serviço',
                       style: TextStyle(color: Colors.black)),
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    voltar();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(216, 50),
+                    backgroundColor: const Color.fromARGB(255, 71, 212, 255),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  ),
+                  child: const Text('Voltar',
+                      style: TextStyle(color: Colors.black)),
+                ),
               ],
             ),
           ),
@@ -109,6 +129,15 @@ class _ServicosCadastroState extends State<ServicosCadastro> {
   }
 
   cadastrar() async {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ServicoEditar(),
+      ),
+    );
+  }
+
+  voltar() async {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(

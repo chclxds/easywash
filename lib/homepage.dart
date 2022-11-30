@@ -1,14 +1,15 @@
 import 'package:easywash/visualizarservico.dart';
 import 'package:flutter/material.dart';
-
 import 'loginpage.dart';
 
-class HomePageUsuario extends StatelessWidget {
-  final dynamic title;
-  const HomePageUsuario({Key? key, this.title}) : super(key: key);
+class HomePageUsuario extends StatefulWidget {
+  const HomePageUsuario({super.key});
 
-  BuildContext? get context => null;
+  @override
+  State<HomePageUsuario> createState() => _HomePageUsuarioState();
+}
 
+class _HomePageUsuarioState extends State<HomePageUsuario> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,6 +35,7 @@ class HomePageUsuario extends StatelessWidget {
           image: DecorationImage(
             alignment: Alignment(0.0, -1.0),
             image: AssetImage('assets/backgroud-prelogin.png'),
+            opacity: 0.75,
             fit: BoxFit.cover,
           ),
         ),
@@ -114,10 +116,6 @@ class HomePageUsuario extends StatelessWidget {
 
   signOut() async {
     Navigator.pushReplacement(
-      context!,
-      MaterialPageRoute(
-        builder: (context) => const LoginPage(),
-      ),
-    );
+        context, MaterialPageRoute(builder: (context) => const LoginPage()));
   }
 }

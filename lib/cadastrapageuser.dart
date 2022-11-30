@@ -118,6 +118,7 @@ class _CadastrarPageUserState extends State<CadastrarPageUser> {
           image: DecorationImage(
             alignment: Alignment(0.0, -1.0),
             image: AssetImage('assets/backgroud-prelogin.png'),
+            opacity: 0.75,
             fit: BoxFit.cover,
           ),
         ),
@@ -246,7 +247,7 @@ class _CadastrarPageUserState extends State<CadastrarPageUser> {
                         obscureText: !_verSenha,
                         decoration: InputDecoration(
                           label: const Text('Senha'),
-                          hintText: 'Digite sua senha',
+                          hintText: 'Digite sua senha com 8 caracteres ou mais',
                           suffixIcon: IconButton(
                             onPressed: () {
                               setState(() {
@@ -301,6 +302,9 @@ class _CadastrarPageUserState extends State<CadastrarPageUser> {
                         ),
                         child: const Text('Cadastrar',
                             style: TextStyle(color: Colors.black)),
+                      ),
+                      const SizedBox(
+                        height: 20,
                       ),
                     ],
                   ),

@@ -95,24 +95,30 @@ class _ServicoEditarState extends State<ServicoEditar> {
           image: DecorationImage(
             alignment: Alignment(0.0, -1.0),
             image: AssetImage('assets/backgroud-prelogin.png'),
+            opacity: 0.75,
             fit: BoxFit.cover,
           ),
         ),
         child: Form(
           key: _formKey,
           child: (_futureServico == null)
-              ? SingleChildScrollView(
+              ? Container(
                   padding: const EdgeInsets.only(right: 20, left: 20, top: 20),
                   child: Column(
                     children: [
                       const Center(
                         heightFactor: 2,
-                        child: Text('Tipo de Serviços',
-                            textDirection: TextDirection.ltr,
-                            style: TextStyle(
-                              fontFamily: 'Ubuntu',
-                              color: Color.fromARGB(255, 51, 51, 51),
-                            )),
+                        child: Text(
+                          'Cadastrar Serviço',
+                          textDirection: TextDirection.ltr,
+                          style: TextStyle(
+                            fontFamily: 'Ubuntu',
+                            color: Color.fromARGB(255, 0, 0, 0),
+                          ),
+                        ),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.all(16.0),
                       ),
                       TextFormField(
                         controller: _tituloController,
