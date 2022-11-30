@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(
                         fontFamily: 'Ubuntu',
                         fontSize: 35,
-                        color: Color.fromARGB(255, 51, 51, 51),
+                        color: Color.fromARGB(255, 0, 0, 0),
                       )),
                 ),
                 Image.asset(

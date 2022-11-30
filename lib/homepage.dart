@@ -50,7 +50,7 @@ class _HomePageUsuarioState extends State<HomePageUsuario> {
                       textDirection: TextDirection.ltr,
                       style: TextStyle(
                         fontFamily: 'Ubuntu',
-                        color: Color.fromARGB(255, 51, 51, 51),
+                        color: Color.fromARGB(255, 0, 0, 0),
                       )),
                 ),
                 const Padding(
