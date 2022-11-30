@@ -1,23 +1,23 @@
-import 'package:easywash/editarservicos.dart';
+import 'package:easywash/homepagelavanderia.dart';
 import 'package:flutter/material.dart';
 
 import 'loginpage.dart';
 
-class ServicosCadastro extends StatefulWidget {
-  const ServicosCadastro({super.key});
+class PedidosPage extends StatefulWidget {
+  const PedidosPage({super.key});
 
   @override
-  State<ServicosCadastro> createState() => _ServicosCadastroState();
+  State<PedidosPage> createState() => _PedidosPageState();
 }
 
-class _ServicosCadastroState extends State<ServicosCadastro> {
+class _PedidosPageState extends State<PedidosPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          'Serviços',
+          'Pedidos',
           style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
         ),
         actions: [
@@ -46,49 +46,47 @@ class _ServicosCadastroState extends State<ServicosCadastro> {
               children: [
                 const Center(
                   heightFactor: 2,
-                  child: Text('Tipo de Serviços',
-                      textDirection: TextDirection.ltr,
-                      style: TextStyle(
-                        fontFamily: 'Ubuntu',
-                        color: Color.fromARGB(255, 51, 51, 51),
-                      )),
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16.0),
                 ),
-                Container(
-                  padding: const EdgeInsets.all(25),
-                  decoration: BoxDecoration(
-                      color: Colors.blueGrey[100],
-                      borderRadius: BorderRadius.circular(8)),
-                  child: const Text('Serviço 1'),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  padding: const EdgeInsets.all(25),
-                  decoration: BoxDecoration(
-                      color: Colors.blueGrey[100],
-                      borderRadius: BorderRadius.circular(8)),
-                  child: const Text('Serviço 2'),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  padding: const EdgeInsets.all(25),
-                  decoration: BoxDecoration(
-                      color: Colors.blueGrey[100],
-                      borderRadius: BorderRadius.circular(8)),
-                  child: const Text('Serviço 3'),
+                SizedBox(
+                  height: 400,
+                  child: ListView(
+                    children: <Widget>[
+                      Card(
+                        child: ListTile(
+                          leading: Image.asset('assets/Icon-avatar.png'),
+                          title: const Text('Jose'),
+                          subtitle: const Text(
+                              'Pedido : 9876, 10 Camisas, Rua concordia numero 77'),
+                        ),
+                      ),
+                      Card(
+                        child: ListTile(
+                          leading: Image.asset('assets/Icon-avatar.png'),
+                          title: const Text('Renata'),
+                          subtitle: const Text(
+                              'Pedido : 9877, 9 Calças, Rua senador numero 147'),
+                        ),
+                      ),
+                      Card(
+                        child: ListTile(
+                          leading: Image.asset('assets/Icon-avatar.png'),
+                          title: const Text('Ellen'),
+                          subtitle: const Text(
+                              'Pedido : 9879, 5 Vestidos, 3 Calças, 10 Camisas, Rua Chile numero 200'),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    cadastrar();
+                    voltar();
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(216, 50),
@@ -97,7 +95,7 @@ class _ServicosCadastroState extends State<ServicosCadastro> {
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                   ),
-                  child: const Text('Cadastrar Serviço',
+                  child: const Text('Voltar',
                       style: TextStyle(color: Colors.black)),
                 ),
               ],
@@ -108,11 +106,11 @@ class _ServicosCadastroState extends State<ServicosCadastro> {
     );
   }
 
-  cadastrar() async {
+  voltar() async {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => const ServicoEditar(),
+        builder: (context) => const HomePageLavanderia(),
       ),
     );
   }

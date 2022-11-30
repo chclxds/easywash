@@ -1,8 +1,8 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
+import 'loginpage.dart';
 import 'servicos.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -82,7 +82,7 @@ class _ServicoEditarState extends State<ServicoEditar> {
         actions: [
           GestureDetector(
             onTap: () {
-              FirebaseAuth.instance.signOut();
+              signOut();
             },
             child: const Icon(Icons.logout),
           ),
@@ -233,5 +233,10 @@ class _ServicoEditarState extends State<ServicoEditar> {
         builder: (context) => const ServicosCadastro(),
       ),
     );
+  }
+
+  signOut() async {
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const LoginPage()));
   }
 }

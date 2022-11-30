@@ -1,6 +1,7 @@
 import 'package:easywash/homepage.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
+import 'loginpage.dart';
 
 class ContratadoServico extends StatefulWidget {
   const ContratadoServico({super.key});
@@ -22,7 +23,7 @@ class _ContratadoServicoState extends State<ContratadoServico> {
         actions: [
           GestureDetector(
             onTap: () {
-              FirebaseAuth.instance.signOut();
+              signOut();
             },
             child: const Icon(Icons.logout),
           ),
@@ -88,8 +89,13 @@ class _ContratadoServicoState extends State<ContratadoServico> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => const HomePage(),
+        builder: (context) => const HomePageUsuario(),
       ),
     );
+  }
+
+  signOut() async {
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const LoginPage()));
   }
 }

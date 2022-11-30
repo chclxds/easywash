@@ -1,6 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
+// ignore_for_file: avoid_print, use_build_context_synchronously
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'homepage.dart';
+import 'homepagelavanderia.dart';
 import 'registropage.dart';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,13 +19,6 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _senhaController = TextEditingController();
   bool _verSenha = false;
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _senhaController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
                       label: Text('E-mail'),
-                      hintText: 'nome@email.com',
+                      hintText: 'email@email.com',
                     ),
                     validator: (email) {
                       if (email == null || email.isEmpty) {
@@ -166,9 +164,38 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   logar() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: _emailController.text.trim(),
-      password: _senhaController.text.trim(),
-    );
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    var url = Uri.parse('https://easywash-backend.herokuapp.com/login');
+    var response = await http.post(url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(
+          <String, String>{
+            'email': _emailController.text,
+            'senha': _senhaController.text,
+          },
+        ));
+
+    print(response.statusCode);
+    print(response.body);
+    if (response.statusCode == 200) {
+      String idUsuario = json.decode(response.body)['idUsuario'];
+      await sharedPreferences.setString('idUsuario', 'idUsuario $idUsuario');
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const HomePageUsuario()));
+    } else if (response.statusCode == 201) {
+      String idLavanderia = json.decode(response.body)['idLavanderia'];
+      await sharedPreferences.setString(
+          'idLavanderia', 'idLavanderia $idLavanderia');
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const HomePageLavanderia()));
+    } else {
+      const SnackBar(
+        backgroundColor: Colors.redAccent,
+        content: Text('E-mail ou Senha inválidos'),
+        behavior: SnackBarBehavior.floating,
+      );
+    }
   }
 }

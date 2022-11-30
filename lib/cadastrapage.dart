@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
-import 'package:easywash/servicos.dart';
+import 'package:easywash/loginpage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -345,7 +345,7 @@ class _CadastrarPageState extends State<CadastrarPage> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => const ServicosCadastro(),
+        builder: (context) => const LoginPage(),
       ),
     );
   }

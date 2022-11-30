@@ -1,7 +1,7 @@
 import 'package:easywash/homepage.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'contratopage.dart';
+import 'loginpage.dart';
 
 class VerServico extends StatefulWidget {
   const VerServico({super.key});
@@ -23,7 +23,7 @@ class _VerServicoState extends State<VerServico> {
         actions: [
           GestureDetector(
             onTap: () {
-              FirebaseAuth.instance.signOut();
+              signOut();
             },
             child: const Icon(Icons.logout),
           ),
@@ -142,8 +142,13 @@ class _VerServicoState extends State<VerServico> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => const HomePage(),
+        builder: (context) => const HomePageUsuario(),
       ),
     );
+  }
+
+  signOut() async {
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const LoginPage()));
   }
 }

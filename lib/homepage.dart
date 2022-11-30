@@ -1,10 +1,13 @@
 import 'package:easywash/visualizarservico.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
+import 'loginpage.dart';
+
+class HomePageUsuario extends StatelessWidget {
   final dynamic title;
-  const HomePage({Key? key, this.title}) : super(key: key);
+  const HomePageUsuario({Key? key, this.title}) : super(key: key);
+
+  BuildContext? get context => null;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,7 @@ class HomePage extends StatelessWidget {
         actions: [
           GestureDetector(
             onTap: () {
-              FirebaseAuth.instance.signOut();
+              signOut();
             },
             child: const Icon(Icons.logout),
           ),
@@ -105,6 +108,15 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  signOut() async {
+    Navigator.pushReplacement(
+      context!,
+      MaterialPageRoute(
+        builder: (context) => const LoginPage(),
       ),
     );
   }
