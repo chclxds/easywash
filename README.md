@@ -2,6 +2,6 @@
 
 ## Projeto
 
-Projeto desenvolvido para trablho da disciplina de Dispositivos Moveis.
+Projeto desenvolvido para o Estudo Dirigido da disciplina de Dispositivos Moveis.
 
-Posso vim a melhorar no futuro ou pode ficar abandonado desse modo.
+Posso vim ser melhorado em algum momento no futuro ou ficar abandonado desse modo.
