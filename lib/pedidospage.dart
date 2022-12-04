@@ -1,6 +1,5 @@
 import 'package:easywash/homepagelavanderia.dart';
 import 'package:flutter/material.dart';
-
 import 'loginpage.dart';
 
 class PedidosPage extends StatefulWidget {
@@ -11,6 +10,20 @@ class PedidosPage extends StatefulWidget {
 }
 
 class _PedidosPageState extends State<PedidosPage> {
+  voltar() async {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const HomePageLavanderia(),
+      ),
+    );
+  }
+
+  signOut() async {
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const LoginPage()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,19 +118,5 @@ class _PedidosPageState extends State<PedidosPage> {
         ),
       ),
     );
-  }
-
-  voltar() async {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const HomePageLavanderia(),
-      ),
-    );
-  }
-
-  signOut() async {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const LoginPage()));
   }
 }

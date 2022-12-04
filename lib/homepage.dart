@@ -10,6 +10,11 @@ class HomePageUsuario extends StatefulWidget {
 }
 
 class _HomePageUsuarioState extends State<HomePageUsuario> {
+  signOut() async {
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const LoginPage()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,10 +117,5 @@ class _HomePageUsuarioState extends State<HomePageUsuario> {
         ),
       ),
     );
-  }
-
-  signOut() async {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const LoginPage()));
   }
 }

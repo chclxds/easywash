@@ -13,6 +13,11 @@ class HomePageLavanderia extends StatefulWidget {
 class _HomePageLavanderiaState extends State<HomePageLavanderia> {
   int _tiposervico = 1;
 
+  signOut() async {
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const LoginPage()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,10 +109,5 @@ class _HomePageLavanderiaState extends State<HomePageLavanderia> {
         ]),
       ),
     );
-  }
-
-  signOut() async {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const LoginPage()));
   }
 }

@@ -1,6 +1,5 @@
 import 'package:easywash/homepage.dart';
 import 'package:flutter/material.dart';
-
 import 'loginpage.dart';
 
 class ContratadoServico extends StatefulWidget {
@@ -11,6 +10,20 @@ class ContratadoServico extends StatefulWidget {
 }
 
 class _ContratadoServicoState extends State<ContratadoServico> {
+  voltar() async {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const HomePageUsuario(),
+      ),
+    );
+  }
+
+  signOut() async {
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const LoginPage()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,19 +97,5 @@ class _ContratadoServicoState extends State<ContratadoServico> {
         ),
       ),
     );
-  }
-
-  voltar() async {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const HomePageUsuario(),
-      ),
-    );
-  }
-
-  signOut() async {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const LoginPage()));
   }
 }

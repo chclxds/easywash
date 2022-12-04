@@ -33,11 +33,6 @@ class _PaginaInicialLavState extends State<PaginaInicialLav> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold();
-  }
-
   Future<bool> verificarLavanderia() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? idLavanderia = sharedPreferences.getString('idLavanderia');
@@ -46,5 +41,10 @@ class _PaginaInicialLavState extends State<PaginaInicialLav> {
     } else {
       return true;
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold();
   }
 }

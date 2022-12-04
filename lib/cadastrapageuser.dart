@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:easywash/loginpage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -32,9 +30,6 @@ Future<Usuario> createUsuario(
         'cidade': cidade,
         'uf': uf,
       }));
-  print(response);
-  print(response.statusCode);
-  print(response.body);
   if (response.statusCode == 200) {
     return Usuario.fromJson(jsonDecode(response.body));
   } else {
@@ -43,16 +38,6 @@ Future<Usuario> createUsuario(
 }
 
 class Usuario {
-  final String id;
-  final String nome;
-  final String senha;
-  final String cpf;
-  final String email;
-  final String telefone;
-  final String rua;
-  final String bairro;
-  final String cidade;
-  final String uf;
   const Usuario({
     required this.id,
     required this.nome,
@@ -65,6 +50,7 @@ class Usuario {
     required this.cidade,
     required this.uf,
   });
+
   factory Usuario.fromJson(Map<String, dynamic> json) {
     return Usuario(
       id: json['id'],
@@ -79,6 +65,17 @@ class Usuario {
       uf: json['uf'],
     );
   }
+
+  final String bairro;
+  final String cidade;
+  final String cpf;
+  final String email;
+  final String id;
+  final String nome;
+  final String rua;
+  final String senha;
+  final String telefone;
+  final String uf;
 }
 
 class CadastrarPageUser extends StatefulWidget {
@@ -89,19 +86,40 @@ class CadastrarPageUser extends StatefulWidget {
 }
 
 class _CadastrarPageUserState extends State<CadastrarPageUser> {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _senhaController = TextEditingController();
-  final TextEditingController _nomeController = TextEditingController();
-  final TextEditingController _cpfController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _telefoneController = TextEditingController();
-  final TextEditingController _ruaController = TextEditingController();
   final TextEditingController _bairroController = TextEditingController();
   final TextEditingController _cidadeController = TextEditingController();
+  final TextEditingController _cpfController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  Future<Usuario>? _futureUser;
+  final TextEditingController _nomeController = TextEditingController();
+  final TextEditingController _ruaController = TextEditingController();
+  final TextEditingController _senhaController = TextEditingController();
+  final TextEditingController _telefoneController = TextEditingController();
   final TextEditingController _ufController = TextEditingController();
   bool _verSenha = false;
 
-  Future<Usuario>? _futureUser;
+  FutureBuilder<Usuario> buildFutureBuilder() {
+    return FutureBuilder(
+        future: _futureUser,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Text(snapshot.data!.nome);
+          } else if (snapshot.hasError) {
+            return Text('${snapshot.error}');
+          }
+          return const CircularProgressIndicator();
+        });
+  }
+
+  cadastrar() async {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const LoginPage(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -311,28 +329,6 @@ class _CadastrarPageUserState extends State<CadastrarPageUser> {
                 )
               : buildFutureBuilder(),
         ),
-      ),
-    );
-  }
-
-  FutureBuilder<Usuario> buildFutureBuilder() {
-    return FutureBuilder(
-        future: _futureUser,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Text(snapshot.data!.nome);
-          } else if (snapshot.hasError) {
-            return Text('${snapshot.error}');
-          }
-          return const CircularProgressIndicator();
-        });
-  }
-
-  cadastrar() async {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const LoginPage(),
       ),
     );
   }

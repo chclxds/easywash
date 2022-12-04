@@ -13,6 +13,15 @@ class RegistroPage extends StatefulWidget {
 class _RegistroPageState extends State<RegistroPage> {
   int _tipocliente = 1;
 
+  voltar() async {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const LoginPage(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,16 +119,6 @@ class _RegistroPageState extends State<RegistroPage> {
             ),
           ),
         ]),
-      ),
-    );
-  }
-
-  voltar() async {
-    // ignore: use_build_context_synchronously
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const LoginPage(),
       ),
     );
   }

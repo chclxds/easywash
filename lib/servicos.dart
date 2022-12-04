@@ -1,6 +1,5 @@
 import 'package:easywash/editarservicos.dart';
 import 'package:flutter/material.dart';
-
 import 'loginpage.dart';
 
 class ServicosCadastro extends StatefulWidget {
@@ -11,6 +10,29 @@ class ServicosCadastro extends StatefulWidget {
 }
 
 class _ServicosCadastroState extends State<ServicosCadastro> {
+  cadastrar() async {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ServicoEditar(),
+      ),
+    );
+  }
+
+  voltar() async {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ServicoEditar(),
+      ),
+    );
+  }
+
+  signOut() async {
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const LoginPage()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,28 +148,5 @@ class _ServicosCadastroState extends State<ServicosCadastro> {
         ),
       ),
     );
-  }
-
-  cadastrar() async {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const ServicoEditar(),
-      ),
-    );
-  }
-
-  voltar() async {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const ServicoEditar(),
-      ),
-    );
-  }
-
-  signOut() async {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const LoginPage()));
   }
 }

@@ -33,11 +33,6 @@ class _PaginaInicialState extends State<PaginaInicial> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold();
-  }
-
   Future<bool> verificarUsuario() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? idUsuario = sharedPreferences.getString('idUsuario');
@@ -46,5 +41,10 @@ class _PaginaInicialState extends State<PaginaInicial> {
     } else {
       return true;
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold();
   }
 }

@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'dart:convert';
 import 'package:easywash/loginpage.dart';
 import 'package:flutter/material.dart';
@@ -34,9 +32,6 @@ Future<Lavanderia> createLavanderia(
         'uf': uf,
         'cep': cep,
       }));
-  print(response);
-  print(response.statusCode);
-  print(response.body);
   if (response.statusCode == 200) {
     return Lavanderia.fromJson(jsonDecode(response.body));
   } else {
@@ -45,17 +40,6 @@ Future<Lavanderia> createLavanderia(
 }
 
 class Lavanderia {
-  final String id;
-  final String nome;
-  final String senha;
-  final String cnpj;
-  final String email;
-  final String telefone;
-  final String rua;
-  final String bairro;
-  final String cidade;
-  final String uf;
-  final String cep;
   const Lavanderia({
     required this.id,
     required this.nome,
@@ -69,6 +53,7 @@ class Lavanderia {
     required this.uf,
     required this.cep,
   });
+
   factory Lavanderia.fromJson(Map<String, dynamic> json) {
     return Lavanderia(
       id: json['id'],
@@ -84,6 +69,18 @@ class Lavanderia {
       cep: json['cep'],
     );
   }
+
+  final String bairro;
+  final String cep;
+  final String cidade;
+  final String cnpj;
+  final String email;
+  final String id;
+  final String nome;
+  final String rua;
+  final String senha;
+  final String telefone;
+  final String uf;
 }
 
 class CadastrarPage extends StatefulWidget {
@@ -94,20 +91,41 @@ class CadastrarPage extends StatefulWidget {
 }
 
 class _CadastrarPageState extends State<CadastrarPage> {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _senhaController = TextEditingController();
-  final TextEditingController _nomeController = TextEditingController();
+  final TextEditingController _bairroController = TextEditingController();
+  final TextEditingController _cepController = TextEditingController();
+  final TextEditingController _cidadeController = TextEditingController();
   final TextEditingController _cnpjController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _telefoneController = TextEditingController();
-  final TextEditingController _cepController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  Future<Lavanderia>? _futureLavanderia;
+  final TextEditingController _nomeController = TextEditingController();
   final TextEditingController _ruaController = TextEditingController();
-  final TextEditingController _bairroController = TextEditingController();
-  final TextEditingController _cidadeController = TextEditingController();
+  final TextEditingController _senhaController = TextEditingController();
+  final TextEditingController _telefoneController = TextEditingController();
   final TextEditingController _ufController = TextEditingController();
   bool _verSenha = false;
 
-  Future<Lavanderia>? _futureLavanderia;
+  FutureBuilder<Lavanderia> buildFutureBuilder() {
+    return FutureBuilder(
+        future: _futureLavanderia,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Text(snapshot.data!.nome);
+          } else if (snapshot.hasError) {
+            return Text('${snapshot.error}');
+          }
+          return const CircularProgressIndicator();
+        });
+  }
+
+  cadastrar() async {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const LoginPage(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -330,28 +348,6 @@ class _CadastrarPageState extends State<CadastrarPage> {
                 )
               : buildFutureBuilder(),
         ),
-      ),
-    );
-  }
-
-  FutureBuilder<Lavanderia> buildFutureBuilder() {
-    return FutureBuilder(
-        future: _futureLavanderia,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Text(snapshot.data!.nome);
-          } else if (snapshot.hasError) {
-            return Text('${snapshot.error}');
-          }
-          return const CircularProgressIndicator();
-        });
-  }
-
-  cadastrar() async {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const LoginPage(),
       ),
     );
   }

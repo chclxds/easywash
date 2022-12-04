@@ -1,4 +1,5 @@
-// ignore_for_file: avoid_print, use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,10 +16,53 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   final _senhaController = TextEditingController();
   bool _verSenha = false;
+
+  cadastrar() async {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const RegistroPage(),
+      ),
+    );
+  }
+
+  logar() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    var url = Uri.parse('https://easywash-backend.herokuapp.com/login');
+    var response = await http.post(url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(
+          <String, String>{
+            'email': _emailController.text,
+            'senha': _senhaController.text,
+          },
+        ));
+
+    if (response.statusCode == 200) {
+      String idUsuario = json.decode(response.body)['idUsuario'];
+      await sharedPreferences.setString('idUsuario', 'idUsuario $idUsuario');
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const HomePageUsuario()));
+    } else if (response.statusCode == 201) {
+      String idLavanderia = json.decode(response.body)['idLavanderia'];
+      await sharedPreferences.setString(
+          'idLavanderia', 'idLavanderia $idLavanderia');
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const HomePageLavanderia()));
+    } else {
+      const SnackBar(
+        backgroundColor: Colors.redAccent,
+        content: Text('E-mail ou Senha inválidos'),
+        behavior: SnackBarBehavior.floating,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -153,50 +197,5 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
-  }
-
-  cadastrar() async {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const RegistroPage(),
-      ),
-    );
-  }
-
-  logar() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    var url = Uri.parse('https://easywash-backend.herokuapp.com/login');
-    var response = await http.post(url,
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(
-          <String, String>{
-            'email': _emailController.text,
-            'senha': _senhaController.text,
-          },
-        ));
-
-    print(response.statusCode);
-    print(response.body);
-    if (response.statusCode == 200) {
-      String idUsuario = json.decode(response.body)['idUsuario'];
-      await sharedPreferences.setString('idUsuario', 'idUsuario $idUsuario');
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const HomePageUsuario()));
-    } else if (response.statusCode == 201) {
-      String idLavanderia = json.decode(response.body)['idLavanderia'];
-      await sharedPreferences.setString(
-          'idLavanderia', 'idLavanderia $idLavanderia');
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const HomePageLavanderia()));
-    } else {
-      const SnackBar(
-        backgroundColor: Colors.redAccent,
-        content: Text('E-mail ou Senha inválidos'),
-        behavior: SnackBarBehavior.floating,
-      );
-    }
   }
 }

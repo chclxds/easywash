@@ -11,6 +11,29 @@ class VerServico extends StatefulWidget {
 }
 
 class _VerServicoState extends State<VerServico> {
+  contratar() async {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ContratadoServico(),
+      ),
+    );
+  }
+
+  voltar() async {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const HomePageUsuario(),
+      ),
+    );
+  }
+
+  signOut() async {
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const LoginPage()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -128,28 +151,5 @@ class _VerServicoState extends State<VerServico> {
         ),
       ),
     );
-  }
-
-  contratar() async {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const ContratadoServico(),
-      ),
-    );
-  }
-
-  voltar() async {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const HomePageUsuario(),
-      ),
-    );
-  }
-
-  signOut() async {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const LoginPage()));
   }
 }

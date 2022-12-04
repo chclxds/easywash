@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
 import 'loginpage.dart';
 import 'servicos.dart';
@@ -21,9 +19,6 @@ Future<Usuario> createUsuario(
         'descricao': descricao,
         'valor': valor,
       }));
-  print(response);
-  print(response.statusCode);
-  print(response.body);
   if (response.statusCode == 200) {
     return Usuario.fromJson(jsonDecode(response.body));
   } else {
@@ -32,11 +27,6 @@ Future<Usuario> createUsuario(
 }
 
 class Usuario {
-  final String id;
-  final String titulo;
-  final String descricao;
-  final String valor;
-  final String idLavanderia;
   const Usuario({
     required this.id,
     required this.titulo,
@@ -44,6 +34,7 @@ class Usuario {
     required this.valor,
     required this.idLavanderia,
   });
+
   factory Usuario.fromJson(Map<String, dynamic> json) {
     return Usuario(
       id: json['id'],
@@ -53,6 +44,12 @@ class Usuario {
       idLavanderia: json['idLavanderia'],
     );
   }
+
+  final String descricao;
+  final String id;
+  final String idLavanderia;
+  final String titulo;
+  final String valor;
 }
 
 class ServicoEditar extends StatefulWidget {
@@ -63,12 +60,47 @@ class ServicoEditar extends StatefulWidget {
 }
 
 class _ServicoEditarState extends State<ServicoEditar> {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _tituloController = TextEditingController();
   final TextEditingController _descricaoController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  Future<Usuario>? _futureServico;
+  final TextEditingController _tituloController = TextEditingController();
   final TextEditingController _valorController = TextEditingController();
 
-  Future<Usuario>? _futureServico;
+  FutureBuilder<Usuario> buildFutureBuilder() {
+    return FutureBuilder(
+        future: _futureServico,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Text(snapshot.data!.titulo);
+          } else if (snapshot.hasError) {
+            return Text('${snapshot.error}');
+          }
+          return const CircularProgressIndicator();
+        });
+  }
+
+  salvar() async {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ServicosCadastro(),
+      ),
+    );
+  }
+
+  cancelar() async {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ServicosCadastro(),
+      ),
+    );
+  }
+
+  signOut() async {
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const LoginPage()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -208,41 +240,5 @@ class _ServicoEditarState extends State<ServicoEditar> {
         ),
       ),
     );
-  }
-
-  FutureBuilder<Usuario> buildFutureBuilder() {
-    return FutureBuilder(
-        future: _futureServico,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Text(snapshot.data!.titulo);
-          } else if (snapshot.hasError) {
-            return Text('${snapshot.error}');
-          }
-          return const CircularProgressIndicator();
-        });
-  }
-
-  salvar() async {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const ServicosCadastro(),
-      ),
-    );
-  }
-
-  cancelar() async {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const ServicosCadastro(),
-      ),
-    );
-  }
-
-  signOut() async {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const LoginPage()));
   }
 }
