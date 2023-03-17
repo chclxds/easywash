@@ -73,7 +73,7 @@ class _PedidosPageState extends State<PedidosPage> {
                           leading: Image.asset('assets/Icon-avatar.png'),
                           title: const Text('Jose'),
                           subtitle: const Text(
-                              'Pedido : 9876, 10 Camisas, Rua concordia numero 77'),
+                              'Pedido : 9876, 10 Camisas, Rua concórdia numero 77'),
                         ),
                       ),
                       Card(

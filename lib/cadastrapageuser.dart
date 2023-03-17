@@ -33,7 +33,7 @@ Future<Usuario> createUsuario(
   if (response.statusCode == 200) {
     return Usuario.fromJson(jsonDecode(response.body));
   } else {
-    throw Exception('Falha ao cadastrar Usuario');
+    throw Exception('Falha ao cadastrar Usuário');
   }
 }
 
@@ -156,7 +156,7 @@ class _CadastrarPageUserState extends State<CadastrarPageUser> {
                         ),
                         validator: (nome) {
                           if (nome == null || nome.isEmpty) {
-                            return 'Digite seu Nome Compelto';
+                            return 'Digite seu Nome Completo';
                           }
                           return null;
                         },
